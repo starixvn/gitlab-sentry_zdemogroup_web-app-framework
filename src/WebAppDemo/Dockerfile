@@ -8,12 +8,12 @@ WORKDIR /build
 
 # Copy files *.sln, *.csproj to restore nuget packages
 COPY *.sln .
-COPY src\WebAppDemo\*.csproj .\src\WebAppDemo\
+COPY src\WebAppDemo\*.csproj src\WebAppDemo\
 
 RUN C:\Users\ContainerAdministrator\AppData\Roaming\NuGet\nuget.exe restore WebAppDemo.sln
 
 # Copy source codes
-COPY src\WebAppDemo\ .\src\WebAppDemo\
+COPY src\WebAppDemo\ src\WebAppDemo\
 
 RUN MSBuild.exe ".\src\WebAppDemo\WebAppDemo.csproj" /t:Build;WebPublish /m /p:Configuration=Release;WebPublishMethod=FileSystem;TransformWebConfigEnabled=False;LocalizedBuild=true;AutoParameterizationWebConfigConnectionStrings=False;MarkWebConfigAssistFilesAsExclude=false;DeleteExistingFiles=False;publishUrl="C:\Compiled" /consoleloggerparameters:ErrorsOnly
 
