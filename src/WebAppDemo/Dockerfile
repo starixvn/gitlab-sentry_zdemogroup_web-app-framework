@@ -9,6 +9,7 @@ WORKDIR /build
 # Copy files *.sln, *.csproj to restore nuget packages
 COPY *.sln .
 COPY src\WebAppDemo\*.csproj src\WebAppDemo\
+COPY src\WebAppDemo\packages.config src\WebAppDemo\
 
 RUN C:\Users\ContainerAdministrator\AppData\Roaming\NuGet\nuget.exe restore WebAppDemo.sln
 
