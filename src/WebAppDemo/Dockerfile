@@ -18,12 +18,12 @@ COPY src\ src\
 
 RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /t:Build;WebPublish /m `
-    /p:Configuration=Release; `
-    /p:WebPublishMethod=FileSystem; `
-    /p:TransformWebConfigEnabled=False; `
-    /p:LocalizedBuild=true; `
-    /p:AutoParameterizationWebConfigConnectionStrings=False; `
-    /p:MarkWebConfigAssistFilesAsExclude=false; `
+    /p:Configuration=Release `
+    /p:WebPublishMethod=FileSystem `
+    /p:TransformWebConfigEnabled=False `
+    /p:LocalizedBuild=true `
+    /p:AutoParameterizationWebConfigConnectionStrings=False `
+    /p:MarkWebConfigAssistFilesAsExclude=false `
     /p:publishUrl="C:\Compiled" `
     /consoleloggerparameters:ErrorsOnly
 
