@@ -28,6 +28,10 @@ RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /p:publishUrl="C:\Compiled" `
     /consoleloggerparameters:ErrorsOnly
 
+# Need to delete original files to mount their content from swarm configs when deploying
+RUN del /f C:\Compiled\Web.config `
+    && del /f C:\Compiled\App_Data\SPNames.xml
+
 FROM registry.nexdev.net:5050/docker/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
 
 WORKDIR C:\inetpub\wwwroot
