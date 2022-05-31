@@ -7,14 +7,14 @@ SHELL ["cmd", "/S", "/C"]
 WORKDIR /build
 
 # Copy files *.sln, *.csproj, packages.config to restore nuget packages
-COPY *.sln .
-COPY src\WebAppDemo\*.csproj src\WebAppDemo\
-COPY src\WebAppDemo\packages.config src\WebAppDemo\
+COPY ..\..\*.sln .
+COPY *.csproj src\WebAppDemo\
+COPY packages.config src\WebAppDemo\
 
 RUN nuget.exe restore WebAppDemo.sln
 
 # Copy source codes
-COPY src src\
+COPY ..\..\src src\
 
 RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /t:Build;WebPublish /m `
