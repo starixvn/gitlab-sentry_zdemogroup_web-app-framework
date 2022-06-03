@@ -31,6 +31,8 @@ RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /consoleloggerparameters:ErrorsOnly
 
 # Transform config
+RUN echo ${DEPLOY_ENV}
+
 RUN xcopy "C:\Compiled\Web.${DEPLOY_ENV}.config" "C:\Compiled\Web.config" /Y `
     && xcopy "C:\Compiled\App_Data\SPNames.${DEPLOY_ENV}.xml" "C:\Compiled\App_Data\SPNames.xml" /Y
 
