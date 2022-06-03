@@ -5,7 +5,7 @@ SHELL ["cmd", "/S", "/C"]
 
 WORKDIR /build
 
-RUN echo "${DEPLOY_ENV}"
+RUN echo "%DEPLOY_ENV%"
 
 # Copy files *.sln, *.csproj, packages.config to restore nuget packages
 COPY *.sln .
@@ -30,10 +30,10 @@ RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /consoleloggerparameters:ErrorsOnly
 
 # Transform config
-RUN echo ${DEPLOY_ENV}
+RUN echo %DEPLOY_ENV%
 
-RUN xcopy "C:\Compiled\Web.${DEPLOY_ENV}.config" "C:\Compiled\Web.config" /Y `
-    && xcopy "C:\Compiled\App_Data\SPNames.${DEPLOY_ENV}.xml" "C:\Compiled\App_Data\SPNames.xml" /Y
+RUN xcopy "C:\Compiled\Web.%DEPLOY_ENV%.config" "C:\Compiled\Web.config" /Y `
+    && xcopy "C:\Compiled\App_Data\SPNames.%DEPLOY_ENV%.xml" "C:\Compiled\App_Data\SPNames.xml" /Y
 
 FROM registry.nexdev.net:5050/docker/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019-utc7-new AS base
 
