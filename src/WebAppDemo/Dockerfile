@@ -2,7 +2,7 @@
 FROM registry.nexdev.net:5050/nexcel/nexops/rocketor/buildservice:base AS builder
 
 ARG DEPLOY_ENV
-ENV Compiled=C:\Compiled
+ARG ROCKETOR_API
 
 SHELL ["cmd", "/S", "/C"]
 
@@ -27,19 +27,32 @@ RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /p:LocalizedBuild=true `
     /p:AutoParameterizationWebConfigConnectionStrings=False `
     /p:MarkWebConfigAssistFilesAsExclude=false `
-    /p:publishUrl="%Compiled%" `
+    /p:publishUrl="C:\Compiled" `
     /consoleloggerparameters:ErrorsOnly
+
+WORKDIR C:\Compiled
+
+# Change SP Version
+RUN `
+    powershell " `
+    $ErrorActionPreference = 'Stop'; `
+    $ProgressPreference = 'SilentlyContinue'; `
+    $VerbosePreference = 'Continue'; `
+    $code=curl --fail -o C:\sp-result.xml -F file=\"App_Data\SPNames.%DEPLOY_ENV%.xml\" -F \"redmineIds=%REDMINE_IDS%\" -X POST \"%ROCKETOR_API%\"; `
+    if($code.StatusCode == 200){ `
+        xcopy C:\sp-result.xml \"App_Data\SPNames.%DEPLOY_ENV%.xml\" /Y; `
+    }"
 
 # Transform config
 RUN echo "%DEPLOY_ENV%" `
-    && xcopy "%Compiled%\Web.%DEPLOY_ENV%.config" "%Compiled%\Web.config" /Y `
-    && xcopy "%Compiled%\App_Data\SPNames.%DEPLOY_ENV%.xml" "%Compiled%\App_Data\SPNames.xml" /Y
+    && xcopy "Web.%DEPLOY_ENV%.config" "Web.config" /Y `
+    && xcopy "App_Data\SPNames.%DEPLOY_ENV%.xml" "App_Data\SPNames.xml" /Y
 
 FROM registry.nexdev.net:5050/docker/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019-utc7-new AS base
 
 WORKDIR C:\inetpub\wwwroot
 
-COPY --from=builder %Compiled% .
+COPY --from=builder C:\Compiled .
 
 RUN dir .\bin\
 
