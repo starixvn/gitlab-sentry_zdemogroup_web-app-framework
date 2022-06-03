@@ -8,6 +8,8 @@ SHELL ["cmd", "/S", "/C"]
 
 WORKDIR /build
 
+RUN echo "${DEPLOY_ENV}"
+
 # Copy files *.sln, *.csproj, packages.config to restore nuget packages
 COPY *.sln .
 COPY src\WebAppDemo\*.csproj src\WebAppDemo\
