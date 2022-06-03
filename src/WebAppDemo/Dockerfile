@@ -1,9 +1,6 @@
 # escape=`
-
-ARG DEPLOY_ENV
-
 FROM registry.nexdev.net:5050/nexcel/nexops/rocketor/buildservice:base AS builder
-
+ARG DEPLOY_ENV
 SHELL ["cmd", "/S", "/C"]
 
 WORKDIR /build
