@@ -3,6 +3,7 @@ FROM registry.nexdev.net:5050/nexcel/nexops/rocketor/buildservice:base AS builde
 
 ARG DEPLOY_ENV
 ARG ROCKETOR_API
+ARG REDMINE_IDS
 
 SHELL ["cmd", "/S", "/C"]
 
@@ -34,19 +35,20 @@ WORKDIR C:\Compiled
 
 # Change SP Version
 RUN `
-    powershell " `
+    echo '%REDMINE_IDS%' `
+    && powershell " `
     $ErrorActionPreference = 'Stop'; `
     $ProgressPreference = 'SilentlyContinue'; `
     $VerbosePreference = 'Continue'; `
-    $spFile = Get-Item -Path 'App_Data\SPNames.%DEPLOY_ENV%.xml'; `
-    $form = @{ `
-        file = $spFile `
-        redmineIds = '%REDMINE_IDS%' `
-    }; `
-    $response = Invoke-WebRequest -OutFile C:\sp-result.xml -Method 'POST' -Uri '%ROCKETOR_API%' -Form $form; `
-    if($response.StatusCode == 200){ `
-        xcopy C:\sp-result.xml 'App_Data\SPNames.%DEPLOY_ENV%.xml' /Y; `
-    };"
+    if('%REDMINE_IDS%' -ne ''){ `
+        $redmineIds = '%REDMINE_IDS%' `
+        $file = Get-Item -Path 'App_Data\SPNames.%DEPLOY_ENV%.xml' `
+        $form = @{ file = $file \r\n redmineIds = $redmineIds } `
+        $response = Invoke-WebRequest -OutFile C:\sp-result.xml -Method 'POST' -Uri '%ROCKETOR_API%' -Form $form `
+        if($response.StatusCode == 200){ `
+            xcopy C:\sp-result.xml 'App_Data\SPNames.%DEPLOY_ENV%.xml' /Y `
+        } `
+    }"
 
 # Transform config
 RUN echo "%DEPLOY_ENV%" `
