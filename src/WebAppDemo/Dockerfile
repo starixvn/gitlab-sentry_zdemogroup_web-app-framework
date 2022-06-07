@@ -38,10 +38,15 @@ RUN `
     $ErrorActionPreference = 'Stop'; `
     $ProgressPreference = 'SilentlyContinue'; `
     $VerbosePreference = 'Continue'; `
-    $code=curl --fail -o C:\sp-result.xml -F file=\"App_Data\SPNames.%DEPLOY_ENV%.xml\" -F \"redmineIds=%REDMINE_IDS%\" -X POST \"%ROCKETOR_API%\"; `
-    if($code.StatusCode == 200){ `
-        xcopy C:\sp-result.xml \"App_Data\SPNames.%DEPLOY_ENV%.xml\" /Y; `
-    }"
+    $spFile = Get-Item -Path 'App_Data\SPNames.%DEPLOY_ENV%.xml'; `
+    $form = @{ `
+        file = $spFile `
+        redmineIds = '%REDMINE_IDS%' `
+    }; `
+    $response = Invoke-WebRequest -OutFile C:\sp-result.xml -Method 'POST' -Uri '%ROCKETOR_API%' -Form $form; `
+    if($response.StatusCode == 200){ `
+        xcopy C:\sp-result.xml 'App_Data\SPNames.%DEPLOY_ENV%.xml' /Y; `
+    };"
 
 # Transform config
 RUN echo "%DEPLOY_ENV%" `
