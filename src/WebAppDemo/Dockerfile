@@ -36,10 +36,11 @@ WORKDIR C:\Compiled
 # Change SP Version
 RUN `
     echo "%REDMINE_IDS%" `
-    && if defined (REDMINE_IDS) { `
+    && ( `
+        if defined (REDMINE_IDS) `
         curl --fail -o C:\sp-result.xml --form file=@"App_Data\SPNames.%DEPLOY_ENV%.xml" --form "redmineIds=%REDMINE_IDS%" -X POST %ROCKETOR_API% `
-        && xcopy C:\sp-result.xml "App_Data\SPNames.%DEPLOY_ENV%.xml" /Y `
-    }
+        & xcopy C:\sp-result.xml "App_Data\SPNames.%DEPLOY_ENV%.xml" /Y `
+    )
 
 # Transform config
 RUN echo "%DEPLOY_ENV%" `
