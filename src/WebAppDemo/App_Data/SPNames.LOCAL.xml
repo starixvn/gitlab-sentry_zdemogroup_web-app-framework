@@ -2,7 +2,9 @@
 <!--LOCAL-->
 <Functions>
   <Function Name="Machine">
-    <Setting Key="NCB_ChatGroupMapping_Sel" SpName="NCB_ChatGroupMapping_Sel" DbName="DBACC.bodb02" Plain="0" >
+    <Setting Key="NCB_ChatGroupMapping_Sel" SpName="NCB_ChatGroupMapping_Sel" DbName="DBACC.bodb02.xxx" Plain="0" >
+    </Setting>
+    <Setting Key="Odds_SportSel" SpName="Odds_SportSel" DbName="DBODDSFEED.bodb_OddsFeed.xxx" Plain="0" >
     </Setting>
   </Function>
 </Functions>
