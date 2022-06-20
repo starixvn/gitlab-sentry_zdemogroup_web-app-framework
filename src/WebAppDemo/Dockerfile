@@ -1,5 +1,5 @@
 # escape=`
-FROM registry.nexdev.net:5050/nexcel/nexops/rocketor/buildservice:base AS builder
+FROM hub.nexdev.net/base/rocketor/buildservice AS builder
 
 ARG DEPLOY_ENV
 ARG ROCKETOR_API
@@ -49,7 +49,7 @@ RUN echo "%DEPLOY_ENV%" `
     && xcopy "App_Data\SPNames.%DEPLOY_ENV%.xml" "App_Data\SPNames.xml" /Y `
     && xcopy "App_Data\SPNames_2.%DEPLOY_ENV%.xml" "App_Data\SPNames_2.xml" /Y
 
-FROM registry.nexdev.net:5050/docker/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
+FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
 
 WORKDIR C:\inetpub\wwwroot
 
