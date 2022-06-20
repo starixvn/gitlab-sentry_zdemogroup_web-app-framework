@@ -46,7 +46,7 @@ RUN `
 # Transform config
 RUN echo "%DEPLOY_ENV%" `
     && xcopy "Web.%DEPLOY_ENV%.config" "Web.config" /Y `
-    && xcopy "App_Data\SPNames.%DEPLOY_ENV%.xml" "App_Data\SPNames.xml" /Y `
+    && xcopy "App_Data\SPNames.%DEPLOY_ENV%.xml" "App_Data\SPNames.xml" /Y
 #    && xcopy "App_Data\SPNames_2.%DEPLOY_ENV%.xml" "App_Data\SPNames_2.xml" /Y
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
