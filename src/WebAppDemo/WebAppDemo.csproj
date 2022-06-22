@@ -128,6 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml" />
+    <Content Include="App_Data\SPNames.PROD.xml" />
+    <Content Include="App_Data\SPNames.SIT.xml" />
     <Content Include="App_Data\SPNames.UAT.xml" />
     <Content Include="App_Data\SPNames.xml" />
     <Content Include="App_Data\SPNames_2.LOCAL.xml" />
@@ -169,6 +171,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Web.LOCAL.config" />
     <Content Include="Web.UAT.config" />
+    <Content Include="Web.PROD.config" />
+    <Content Include="Web.SIT.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
