@@ -1,7 +1,7 @@
 # escape=`
 FROM hub.nexdev.net/base/rocketor/buildservice AS builder
 
-ARG DEPLOY_ENV
+ARG TRANSFORM_CONFIG
 ARG ROCKETOR_API
 ARG REDMINE_IDS
 
@@ -37,17 +37,17 @@ WORKDIR C:\Compiled
 RUN `
     if defined REDMINE_IDS `
     FOR %P IN ( `
-        App_Data\SPNames.%DEPLOY_ENV%.xml, `
-        App_Data\SPNames_2.%DEPLOY_ENV%.xml `
+        App_Data\SPNames.%TRANSFORM_CONFIG%.xml, `
+        App_Data\SPNames_2.%TRANSFORM_CONFIG%.xml `
     ) `
     DO curl --fail -o C:\sp-result.xml --form file=@"%P" --form "redmineIds=%REDMINE_IDS%" -X POST %ROCKETOR_API% `
         && xcopy C:\sp-result.xml "%P" /Y
 
 # Transform config
-RUN echo "%DEPLOY_ENV%" `
-    && xcopy "Web.%DEPLOY_ENV%.config" "Web.config" /Y `
-    && xcopy "App_Data\SPNames.%DEPLOY_ENV%.xml" "App_Data\SPNames.xml" /Y
-#    && xcopy "App_Data\SPNames_2.%DEPLOY_ENV%.xml" "App_Data\SPNames_2.xml" /Y
+RUN echo "%TRANSFORM_CONFIG%" `
+    && xcopy "Web.%TRANSFORM_CONFIG%.config" "Web.config" /Y `
+    && xcopy "App_Data\SPNames.%TRANSFORM_CONFIG%.xml" "App_Data\SPNames.xml" /Y
+#    && xcopy "App_Data\SPNames_2.%TRANSFORM_CONFIG%.xml" "App_Data\SPNames_2.xml" /Y
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
 
