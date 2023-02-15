@@ -16,7 +16,7 @@ COPY src\WebAppDemo\packages.config src\WebAppDemo\
 
 RUN nuget.exe restore WebAppDemo.sln
 
-# Copy source codes
+# Copy source codes - test1
 COPY src src\
 
 RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
