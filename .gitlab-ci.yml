@@ -1,5 +1,4 @@
 include:
-    - project: "ci/repos-ci/nexops_sample_web_app_framework"
-      ref: master
-      file: "gitlab-ci.yml"
-      
+  - project: ci/core-cicd
+    ref: main
+    file: nexcel.gitlab-ci.yml
