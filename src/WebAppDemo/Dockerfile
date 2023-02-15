@@ -14,14 +14,12 @@ COPY *.sln .
 COPY src\WebAppDemo\*.csproj src\WebAppDemo\
 COPY src\WebAppDemo\packages.config src\WebAppDemo\
 
-RUN --mount=type=cache,id=nuget,target=packages `
-    nuget.exe restore WebAppDemo.sln
+RUN nuget.exe restore WebAppDemo.sln
 
 # Copy source codes
 COPY src src\
 
-RUN --mount=type=cache,id=nuget,target=packages `
-    MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
+RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /t:Build;WebPublish /m `
     /p:DebugType=None `
     /p:Configuration=Release `
