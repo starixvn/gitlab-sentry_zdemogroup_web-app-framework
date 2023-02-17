@@ -9,17 +9,18 @@ SHELL ["cmd", "/S", "/C"]
 
 WORKDIR /build
 
-# Copy files *.sln, *.csproj, packages.config to restore nuget packages
+# Copy file *.sln
 COPY *.sln .
-COPY src\WebAppDemo\*.csproj src\WebAppDemo\
-COPY src\WebAppDemo\packages.config src\WebAppDemo\
-
-RUN nuget.exe restore WebAppDemo.sln
-
 # Copy source codes
 COPY src src\
+# Copy nuget packages
+COPY packages packages\
 
-RUN MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
+RUN `
+    # verify nuget packages
+    nuget.exe restore WebAppDemo.sln `
+    # build project
+    && MSBuild.exe "src\WebAppDemo\WebAppDemo.csproj" `
     /t:Build;WebPublish /m `
     /p:DebugType=None `
     /p:Configuration=Release `
@@ -47,7 +48,6 @@ RUN `
 RUN echo "%TRANSFORM_CONFIG%" `
     && xcopy "Web.%TRANSFORM_CONFIG%.config" "Web.config" /Y `
     && xcopy "App_Data\SPNames.%TRANSFORM_CONFIG%.xml" "App_Data\SPNames.xml" /Y
-#    && xcopy "App_Data\SPNames_2.%TRANSFORM_CONFIG%.xml" "App_Data\SPNames_2.xml" /Y
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
 
