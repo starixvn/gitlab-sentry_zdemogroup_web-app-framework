@@ -129,6 +129,7 @@
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL_4.xml" />
     <Content Include="App_Data\SPNames.LOCAL.xml" />
+    <Content Include="App_Data\SPNames.AWS.xml" />
     <Content Include="App_Data\SPNames.PROD.xml" />
     <Content Include="App_Data\SPNames.SIT.xml" />
     <Content Include="App_Data\SPNames.UAT.xml" />
@@ -175,6 +176,7 @@
     <Content Include="Web.PROD.config" />
     <Content Include="Web.SIT.config" />
     <Content Include="Web.LOCAL_4.config" />
+    <Content Include="Web.AWS.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
