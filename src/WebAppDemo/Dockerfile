@@ -49,7 +49,7 @@ RUN echo "%TRANSFORM_CONFIG%" `
     && xcopy "Web.%TRANSFORM_CONFIG%.config" "Web.config" /Y `
     && xcopy "App_Data\SPNames.%TRANSFORM_CONFIG%.xml" "App_Data\SPNames.xml" /Y
 
-FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
+FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.8 AS base
 
 WORKDIR C:\inetpub\wwwroot
 
